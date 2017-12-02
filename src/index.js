@@ -1,48 +1,29 @@
 import convert from "color-convert";
 import Vector from "./vector";
-import { updateVelocity } from "./entity";
+import { updateVelocity, makeEntity } from "./entity";
+import { random } from "./helpers";
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-const WORLD_WIDTH = 1000;
-const WORLD_HEIGHT = 500;
+const WORLD = new Vector(1000, 500);
 
-const ENTITY_SPEED = 3;
-const ENTITY_INTERTIA = 10;
-const ENTITY_ATTRACTION = 1;
-const ENTITY_CORRELATE = 2;
-
-const ENTITY_FOLLOW_DISTANCE = 100;
-const ENTITY_REPEL_DISTANCE = 50;
-
-const target1 = {
+const CENTERING = {
   strength: 0.004,
   exponent: 1,
-  position: new Vector(WORLD_WIDTH / 2, WORLD_HEIGHT / 2)
-};
-const target2 = {
-  strength: -1000,
-  exponent: -1.5,
-  position: new Vector(WORLD_WIDTH / 2, WORLD_HEIGHT / 2)
+  position: WORLD.clone().multiply(0.5)
 };
 
-const random = (min, max) => min + Math.random() * (max - min);
+const MOUSE = {
+  strength: -1000,
+  exponent: -1.5,
+  position: WORLD.clone().multiply(0.5)
+};
 
 const makeNodes = count => {
   const entities = Array(count);
   for (let i = 0; i < entities.length; i++) {
-    entities[i] = {
-      attraction: new Vector(0, 0),
-      correlation: new Vector(0, 0),
-      inertia: random(0.5, 2),
-      speed: random(0.5, 1),
-      position: new Vector(random(0, WORLD_WIDTH), random(0, WORLD_HEIGHT)),
-      velocity: new Vector(
-        random(-ENTITY_SPEED, ENTITY_SPEED),
-        random(-ENTITY_SPEED, ENTITY_SPEED)
-      )
-    };
+    entities[i] = makeEntity(WORLD);
   }
   return entities;
 };
@@ -56,7 +37,7 @@ const moveNodes = entities => {
 
 const drawFill = () => {
   ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
-  ctx.fillRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+  ctx.fillRect(0, 0, WORLD.x, WORLD.y);
 };
 
 const drawNodes = entities => {
@@ -105,7 +86,7 @@ const attractNodes = (entities, targets) => {
 
 const entities = makeNodes(100);
 const step = () => {
-  const targets = [target1, target2];
+  const targets = [CENTERING, MOUSE];
   attractNodes(entities, targets);
   moveNodes(entities);
   drawFill();
@@ -115,15 +96,15 @@ const step = () => {
 };
 
 window.onmousemove = e => {
-  target2.position.x = e.offsetX;
-  target2.position.y = e.offsetY;
+  MOUSE.position.x = e.offsetX;
+  MOUSE.position.y = e.offsetY;
   //console.log(e);
 };
 
 step();
 setInterval(() => {
-  target1.position.x = random(0.25, 0.75) * WORLD_WIDTH;
-  target1.position.y = random(0.25, 0.75) * WORLD_HEIGHT;
+  CENTERING.position.x = random(0.25, 0.75) * WORLD.x;
+  CENTERING.position.y = random(0.25, 0.75) * WORLD.y;
   //  run = !run;
   //  step();
 }, 5000);

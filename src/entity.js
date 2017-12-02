@@ -1,4 +1,5 @@
 import Vector from "./vector";
+import { random } from "./helpers";
 
 const ENTITY_SPEED = 3;
 const ENTITY_INTERTIA = 10;
@@ -25,7 +26,6 @@ const calculateAttractionForce = dist => {
 const calculateForce = (self, other, strength, exponent) => {
   const delta = other.clone().subtract(self);
   const force = strength * Math.pow(delta.length(), exponent);
-  //console.log(self, other, force);
   return delta.normalize(force);
 };
 
@@ -39,7 +39,6 @@ const calculateTargetsForce = (entity, targets) => {
       target.strength,
       target.exponent
     );
-    //console.log(force);
     total.add(force);
   }
   return total;
@@ -88,3 +87,15 @@ export const updateVelocity = (entity, entities, targets) => {
     .add(target)
     .normalize(entity.speed * ENTITY_SPEED);
 };
+
+export const makeEntity = bounds => ({
+  attraction: new Vector(0, 0),
+  correlation: new Vector(0, 0),
+  inertia: random(0.5, 2),
+  speed: random(0.5, 1),
+  position: new Vector(random(0, bounds.x), random(0, bounds.y)),
+  velocity: new Vector(
+    random(-ENTITY_SPEED, ENTITY_SPEED),
+    random(-ENTITY_SPEED, ENTITY_SPEED)
+  )
+});
