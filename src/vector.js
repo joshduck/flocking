@@ -8,6 +8,11 @@ export default class Vector {
     return new Vector(this.x, this.y);
   }
 
+  reset() {
+    this.x = 0;
+    this.y = 0;
+  }
+
   subtract(other) {
     this.x -= other.x;
     this.y -= other.y;

@@ -30,7 +30,7 @@ const calculateForce = (self, other, strength, exponent) => {
 };
 
 const calculateTargetsForce = (entity, targets) => {
-  const total = new Vector(0, 0);
+  entity.target.reset();
   for (let i = 0; i < targets.length; i++) {
     const target = targets[i];
     const force = calculateForce(
@@ -39,12 +39,14 @@ const calculateTargetsForce = (entity, targets) => {
       target.strength,
       target.exponent
     );
-    total.add(force);
+    entity.target.add(force);
   }
-  return total;
 };
 
-const calculatePeerPressure = (entity, entities, attraction, correlation) => {
+const calculatePeerPressure = (entity, entities) => {
+  const { attraction, correlation } = entity;
+  attraction.reset();
+  correlation.reset();
   let peers = 1;
 
   for (let i = 0; i < entities.length; i++) {
@@ -68,34 +70,32 @@ const calculatePeerPressure = (entity, entities, attraction, correlation) => {
 };
 
 export const updateVelocity = (entity, entities, targets) => {
-  const attraction = new Vector(0, 0);
-  const correlation = new Vector(0, 0);
-
-  calculatePeerPressure(entity, entities, attraction, correlation);
-  const target = calculateTargetsForce(entity, targets);
-
-  // Store information for debugging
-  entity.target = target.clone().multiply(100);
-  entity.attraction = attraction.clone().multiply(100);
-  entity.correlation = correlation.clone().multiply(100);
+  calculatePeerPressure(entity, entities);
+  calculateTargetsForce(entity, targets);
 
   // Apply forces with weighting
   entity.velocity
     .multiply(entity.inertia * ENTITY_INTERTIA)
-    .add(attraction.multiply(ENTITY_ATTRACTION))
-    .add(correlation.multiply(ENTITY_CORRELATE))
-    .add(target)
+    .add(entity.attraction.multiply(ENTITY_ATTRACTION))
+    .add(entity.correlation.multiply(ENTITY_CORRELATE))
+    .add(entity.target)
     .normalize(entity.speed * ENTITY_SPEED);
 };
 
 export const makeEntity = bounds => ({
+  // Component forces
   attraction: new Vector(0, 0),
   correlation: new Vector(0, 0),
-  inertia: random(0.5, 2),
-  speed: random(0.5, 1),
+  target: new Vector(0, 0),
+
+  // Physics
   position: new Vector(random(0, bounds.x), random(0, bounds.y)),
   velocity: new Vector(
     random(-ENTITY_SPEED, ENTITY_SPEED),
     random(-ENTITY_SPEED, ENTITY_SPEED)
-  )
+  ),
+
+  // Personality
+  inertia: random(0.5, 2),
+  speed: random(0.5, 1)
 });
