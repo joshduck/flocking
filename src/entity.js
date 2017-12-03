@@ -1,24 +1,17 @@
 import Vector from "./vector";
 import { random } from "./helpers";
+import { ENTITY } from "./config";
 
-const ENTITY_SPEED = 3;
-const ENTITY_INTERTIA = 10;
-const ENTITY_ATTRACTION = 1;
-const ENTITY_CORRELATE = 2;
-
-const ENTITY_FOLLOW_DISTANCE = 100;
-const ENTITY_REPEL_DISTANCE = 50;
-
-const calculateCorrelationForce = dist => 1 - dist / ENTITY_FOLLOW_DISTANCE;
+const calculateCorrelationForce = dist => 1 - dist / ENTITY.FOLLOW_DISTANCE;
 
 const calculateAttractionForce = dist => {
-  if (dist <= ENTITY_REPEL_DISTANCE * 2) {
-    return dist / ENTITY_REPEL_DISTANCE - 1;
+  if (dist <= ENTITY.REPEL_DISTANCE * 2) {
+    return dist / ENTITY.REPEL_DISTANCE - 1;
   } else {
     return (
       1 -
-      (dist - ENTITY_REPEL_DISTANCE) /
-        (ENTITY_FOLLOW_DISTANCE - ENTITY_REPEL_DISTANCE)
+      (dist - ENTITY.REPEL_DISTANCE) /
+        (ENTITY.FOLLOW_DISTANCE - ENTITY.REPEL_DISTANCE)
     );
   }
 };
@@ -56,7 +49,7 @@ const calculatePeerPressure = (entity, entities) => {
     const delta = other.position.clone().subtract(entity.position);
     const dist = delta.length();
 
-    if (dist < ENTITY_FOLLOW_DISTANCE) {
+    if (dist < ENTITY.FOLLOW_DISTANCE) {
       peers += 1;
       correlation.add(
         other.velocity.clone().normalize(calculateCorrelationForce(dist))
@@ -75,11 +68,11 @@ export const updateVelocity = (entity, entities, targets) => {
 
   // Apply forces with weighting
   entity.velocity
-    .multiply(entity.inertia * ENTITY_INTERTIA)
-    .add(entity.attraction.multiply(ENTITY_ATTRACTION))
-    .add(entity.correlation.multiply(ENTITY_CORRELATE))
+    .multiply(entity.inertia * ENTITY.INTERTIA)
+    .add(entity.attraction.multiply(ENTITY.ATTRACTION))
+    .add(entity.correlation.multiply(ENTITY.CORRELATE))
     .add(entity.target)
-    .normalize(entity.speed * ENTITY_SPEED);
+    .normalize(entity.speed * ENTITY.SPEED);
 };
 
 export const makeEntity = bounds => ({
@@ -91,8 +84,8 @@ export const makeEntity = bounds => ({
   // Physics
   position: new Vector(random(0, bounds.x), random(0, bounds.y)),
   velocity: new Vector(
-    random(-ENTITY_SPEED, ENTITY_SPEED),
-    random(-ENTITY_SPEED, ENTITY_SPEED)
+    random(-ENTITY.SPEED, ENTITY.SPEED),
+    random(-ENTITY.SPEED, ENTITY.SPEED)
   ),
 
   // Personality
