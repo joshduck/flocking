@@ -7,3 +7,7 @@ export const ENTITY = {
   FOLLOW_DISTANCE: 100,
   REPEL_DISTANCE: 50
 };
+
+export const WORLD = {
+  ENTITIES: 100
+};

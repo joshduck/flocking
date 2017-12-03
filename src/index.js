@@ -1,32 +1,10 @@
 import convert from "color-convert";
-import Vector from "./util/vector";
-import Entity from "./entity";
 import random from "./util/random";
+import { makeWorld } from "./world";
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-
-const WORLD = new Vector(1000, 500);
-
-const CENTERING = {
-  strength: 0.004,
-  exponent: 1,
-  position: WORLD.clone().multiply(0.5)
-};
-
-const MOUSE = {
-  strength: -1000,
-  exponent: -1.5,
-  position: WORLD.clone().multiply(0.5)
-};
-
-const makeNodes = count => {
-  const entities = Array(count);
-  for (let i = 0; i < entities.length; i++) {
-    entities[i] = new Entity(WORLD);
-  }
-  return entities;
-};
+const world = makeWorld();
 
 const moveNodes = entities => {
   for (let i = 0; i < entities.length; i++) {
@@ -36,7 +14,7 @@ const moveNodes = entities => {
 
 const drawFill = () => {
   ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
-  ctx.fillRect(0, 0, WORLD.x, WORLD.y);
+  ctx.fillRect(0, 0, world.bounds.x, world.bounds.y);
 };
 
 const drawNodes = entities => {
@@ -83,9 +61,9 @@ const attractNodes = (entities, targets) => {
   }
 };
 
-const entities = makeNodes(100);
+console.log(world);
 const step = () => {
-  const targets = [CENTERING, MOUSE];
+  const { entities, targets } = world;
   attractNodes(entities, targets);
   moveNodes(entities);
   drawFill();
@@ -95,15 +73,15 @@ const step = () => {
 };
 
 window.onmousemove = e => {
-  MOUSE.position.x = e.offsetX;
-  MOUSE.position.y = e.offsetY;
+  world.touchPoint.position.x = e.offsetX;
+  world.touchPoint.position.y = e.offsetY;
   //console.log(e);
 };
 
 step();
 setInterval(() => {
-  CENTERING.position.x = random(0.25, 0.75) * WORLD.x;
-  CENTERING.position.y = random(0.25, 0.75) * WORLD.y;
+  world.homingBeacon.position.x = random(0.25, 0.75) * world.bounds.x;
+  world.homingBeacon.position.y = random(0.25, 0.75) * world.bounds.y;
   //  run = !run;
   //  step();
 }, 5000);
