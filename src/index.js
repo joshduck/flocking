@@ -1,6 +1,6 @@
 import convert from "color-convert";
 import Vector from "./util/vector";
-import { updateVelocity, makeEntity } from "./entity";
+import Entity from "./entity";
 import random from "./util/random";
 
 var canvas = document.getElementById("canvas");
@@ -23,15 +23,14 @@ const MOUSE = {
 const makeNodes = count => {
   const entities = Array(count);
   for (let i = 0; i < entities.length; i++) {
-    entities[i] = makeEntity(WORLD);
+    entities[i] = new Entity(WORLD);
   }
   return entities;
 };
 
 const moveNodes = entities => {
   for (let i = 0; i < entities.length; i++) {
-    const { position, velocity } = entities[i];
-    position.add(velocity);
+    entities[i].updatePosition();
   }
 };
 
@@ -80,7 +79,7 @@ const drawTargets = targets => {
 
 const attractNodes = (entities, targets) => {
   for (let i = 0; i < entities.length; i++) {
-    updateVelocity(entities[i], entities, targets);
+    entities[i].updateVelocity(entities, targets);
   }
 };
 
