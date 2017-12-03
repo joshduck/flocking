@@ -1,7 +1,7 @@
 import convert from "color-convert";
 import Vector from "./vector";
 import { updateVelocity, makeEntity } from "./entity";
-import { random } from "./helpers";
+import random from "./util/random";
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");

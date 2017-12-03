@@ -1,5 +1,5 @@
 import Vector from "./vector";
-import { random } from "./helpers";
+import random from "./util/random";
 import { ENTITY } from "./config";
 
 const calculateCorrelationForce = dist => 1 - dist / ENTITY.FOLLOW_DISTANCE;
