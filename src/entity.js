@@ -1,32 +1,17 @@
-import Vector from "./vector";
+import Vector from "./util/vector";
 import random from "./util/random";
+import {
+  attractionForce,
+  correlationForce,
+  exponentialForce
+} from "./util/forces";
 import { ENTITY } from "./config";
-
-const calculateCorrelationForce = dist => 1 - dist / ENTITY.FOLLOW_DISTANCE;
-
-const calculateAttractionForce = dist => {
-  if (dist <= ENTITY.REPEL_DISTANCE * 2) {
-    return dist / ENTITY.REPEL_DISTANCE - 1;
-  } else {
-    return (
-      1 -
-      (dist - ENTITY.REPEL_DISTANCE) /
-        (ENTITY.FOLLOW_DISTANCE - ENTITY.REPEL_DISTANCE)
-    );
-  }
-};
-
-const calculateForce = (self, other, strength, exponent) => {
-  const delta = other.clone().subtract(self);
-  const force = strength * Math.pow(delta.length(), exponent);
-  return delta.normalize(force);
-};
 
 const calculateTargetsForce = (entity, targets) => {
   entity.target.reset();
   for (let i = 0; i < targets.length; i++) {
     const target = targets[i];
-    const force = calculateForce(
+    const force = exponentialForce(
       entity.position,
       target.position,
       target.strength,
@@ -51,10 +36,8 @@ const calculatePeerPressure = (entity, entities) => {
 
     if (dist < ENTITY.FOLLOW_DISTANCE) {
       peers += 1;
-      correlation.add(
-        other.velocity.clone().normalize(calculateCorrelationForce(dist))
-      );
-      attraction.add(delta.normalize(calculateAttractionForce(dist)));
+      correlation.add(other.velocity.clone().normalize(correlationForce(dist)));
+      attraction.add(delta.normalize(attractionForce(dist)));
     }
   }
 

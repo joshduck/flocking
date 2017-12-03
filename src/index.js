@@ -1,5 +1,5 @@
 import convert from "color-convert";
-import Vector from "./vector";
+import Vector from "./util/vector";
 import { updateVelocity, makeEntity } from "./entity";
 import random from "./util/random";
 
