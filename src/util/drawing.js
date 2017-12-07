@@ -1,5 +1,12 @@
 import convert from "color-convert";
 
+export const createBuffer = canvas => {
+  const buffer = document.createElement("canvas");
+  buffer.height = canvas.height;
+  buffer.width = canvas.width;
+  return buffer.getContext("2d");
+};
+
 export const fillBounds = (ctx, bounds) => {
   ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
   ctx.fillRect(0, 0, bounds.x, bounds.y);
