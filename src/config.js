@@ -1,4 +1,4 @@
-export const ENTITY = {
+export const entity = {
   SPEED: 3,
   INTERTIA: 10,
   ATTRACTION: 1,
@@ -8,6 +8,6 @@ export const ENTITY = {
   REPEL_DISTANCE: 50
 };
 
-export const WORLD = {
+export const world = {
   ENTITIES: 100
 };

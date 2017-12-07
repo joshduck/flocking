@@ -5,7 +5,7 @@ import {
   correlationForce,
   exponentialForce
 } from "./util/forces";
-import { ENTITY } from "./config";
+import { entity as config } from "./config";
 
 export default class Entity {
   constructor(bounds) {
@@ -17,8 +17,8 @@ export default class Entity {
     // Physics
     this.position = new Vector(random(0, bounds.x), random(0, bounds.y));
     this.velocity = new Vector(
-      random(-ENTITY.SPEED, ENTITY.SPEED),
-      random(-ENTITY.SPEED, ENTITY.SPEED)
+      random(-config.SPEED, config.SPEED),
+      random(-config.SPEED, config.SPEED)
     );
 
     // Personality
@@ -53,7 +53,7 @@ export default class Entity {
       const delta = other.position.clone().subtract(this.position);
       const dist = delta.length();
 
-      if (dist < ENTITY.FOLLOW_DISTANCE) {
+      if (dist < config.FOLLOW_DISTANCE) {
         peers += 1;
         correlation.add(
           other.velocity.clone().normalize(correlationForce(dist))
@@ -72,11 +72,11 @@ export default class Entity {
 
     // Apply forces with weighting
     this.velocity
-      .multiply(this.inertia * ENTITY.INTERTIA)
-      .add(this.attraction.multiply(ENTITY.ATTRACTION))
-      .add(this.correlation.multiply(ENTITY.CORRELATE))
+      .multiply(this.inertia * config.INTERTIA)
+      .add(this.attraction.multiply(config.ATTRACTION))
+      .add(this.correlation.multiply(config.CORRELATE))
       .add(this.target)
-      .normalize(this.speed * ENTITY.SPEED);
+      .normalize(this.speed * config.SPEED);
   }
 
   updatePosition() {

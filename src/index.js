@@ -17,23 +17,33 @@ const updateEntities = (entities, targets) => {
   }
 };
 
-const step = (ctx, world) => {
+const step = ({ front, back }, world) => {
   const { entities, targets, bounds } = world;
 
   // Movement
   updateEntities(entities, targets);
 
   // Drawing
-  fillBounds(ctx, bounds);
-  drawTargets(ctx, targets);
-  drawEntities(ctx, entities);
-  //drawEntityForces(ctx, entities);
+  fillBounds(back, bounds);
+  drawEntities(back, entities);
+  front.drawImage(back.canvas, 0, 0);
 
-  requestAnimationFrame(() => step(ctx, world));
+  drawTargets(front, targets);
+  drawEntityForces(front, entities);
+
+  requestAnimationFrame(() => step({ front, back }, world));
+};
+
+const createBuffer = canvas => {
+  const buffer = document.createElement("canvas");
+  buffer.height = canvas.height;
+  buffer.width = canvas.width;
+  return buffer.getContext("2d");
 };
 
 const initialize = canvas => {
-  const ctx = canvas.getContext("2d");
+  const front = canvas.getContext("2d");
+  const back = createBuffer(canvas);
   const world = makeWorld();
 
   // Avoid touches
@@ -49,7 +59,7 @@ const initialize = canvas => {
   }, 5000);
 
   // Go, go, go!
-  step(ctx, world);
+  step({ front, back }, world);
 };
 
 var canvas = document.getElementById("canvas");

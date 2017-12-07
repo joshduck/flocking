@@ -1,15 +1,15 @@
-import { ENTITY } from "../config";
+import { entity as config } from "../config";
 
-export const correlationForce = dist => 1 - dist / ENTITY.FOLLOW_DISTANCE;
+export const correlationForce = dist => 1 - dist / config.FOLLOW_DISTANCE;
 
 export const attractionForce = dist => {
-  if (dist <= ENTITY.REPEL_DISTANCE * 2) {
-    return dist / ENTITY.REPEL_DISTANCE - 1;
+  if (dist <= config.REPEL_DISTANCE * 2) {
+    return dist / config.REPEL_DISTANCE - 1;
   } else {
     return (
       1 -
-      (dist - ENTITY.REPEL_DISTANCE) /
-        (ENTITY.FOLLOW_DISTANCE - ENTITY.REPEL_DISTANCE)
+      (dist - config.REPEL_DISTANCE) /
+        (config.FOLLOW_DISTANCE - config.REPEL_DISTANCE)
     );
   }
 };

@@ -1,6 +1,6 @@
 import Vector from "./util/vector";
 import Entity from "./entity";
-import { WORLD as config } from "./config";
+import { world as config } from "./config";
 
 export const makeWorld = () => {
   const bounds = new Vector(1000, 500);

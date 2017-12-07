@@ -23,11 +23,11 @@ export const drawEntityForces = (ctx, entities) => {
     ctx.strokeStyle = "red";
     drawVector(ctx, position, target, 10);
 
-    ctx.strokeStyle = "green";
-    drawVector(ctx, position, attraction, 10);
+    ctx.strokeStyle = "red";
+    drawVector(ctx, position, attraction, 20);
 
-    ctx.strokeStyle = "blue";
-    drawVector(ctx, position, correlation, 10);
+    ctx.strokeStyle = "red";
+    drawVector(ctx, position, correlation, 20);
   }
 };
 
@@ -37,7 +37,7 @@ export const drawEntities = (ctx, entities) => {
 
     ctx.lineWidth = 2;
     ctx.strokeStyle =
-      "#" + convert.hsl.hex((entities[i].speed * 512) % 255, 100, 50);
+      "#" + convert.hsl.hex((entities[i].speed * 512) % 255, 100, 70);
     drawVector(ctx, position, velocity, -1);
   }
 };
