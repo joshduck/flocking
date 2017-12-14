@@ -1,5 +1,5 @@
+import Vector from "@joshduck/vector2d";
 import random from "./util/random";
-import Vector from "./util/vector";
 import Entity from "./entity";
 import {
   createBuffer,

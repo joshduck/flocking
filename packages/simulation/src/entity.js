@@ -1,4 +1,4 @@
-import Vector from "./util/vector";
+import Vector from "@joshduck/vector2d";
 import random from "./util/random";
 import {
   attractionForce,
