@@ -14,10 +14,12 @@ export default class Simulation {
   constructor(canvas, config = {}) {
     this.canvas = canvas;
     this.play = true;
-    this.config = {
-      debug: false,
-      ...config
-    };
+    this.config = Object.assign(
+      {
+        debug: false
+      },
+      config
+    );
 
     this.initCanvas();
     this.initEntities();
@@ -25,7 +27,7 @@ export default class Simulation {
   }
 
   setConfig(config) {
-    this.config = { ...this.config, ...config };
+    Object.assign(this.config, config);
   }
 
   initCanvas() {

@@ -1,4 +1,4 @@
-import Simulation from "./simulation";
+import Simulation from "@joshduck/flocking";
 
 const canvas = document.getElementById("canvas");
 const startButton = document.getElementById("start");

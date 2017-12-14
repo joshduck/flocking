@@ -1,0 +1,14 @@
+{
+  "name": "@joshduck/flocking",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "src/simulation",
+  "dependencies": {
+    "color-convert": "^1.9.1",
+    "hsl-to-rgb": "^1.0.0",
+    "@joshduck/vector2d": "^1.0.0"
+  },
+  "devDependencies": {
+    "lerna": "^2.5.1"
+  }
+}
