@@ -1,4 +1,4 @@
-export default class Vector {
+class Vector {
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -43,3 +43,5 @@ export default class Vector {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 }
+
+module.exports = Vector;
