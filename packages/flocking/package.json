@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "main": "src/simulation",
+  "homepage":
+    "https://github.com/joshduck/flocking/tree/master/packages/flocking",
   "dependencies": {
     "color-convert": "^1.9.1",
     "hsl-to-rgb": "^1.0.0",
