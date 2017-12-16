@@ -2,16 +2,22 @@
 
 A simulation of boids.
 
-![Screenshot](static/screen.png)
-
-```
-import Simulation from "@joshduck/flocking";
+```javascript
+import Flocking from "@joshduck/flocking";
 
 const canvas = document.getElementById("canvas");
-const simulation = new Simulation(canvas);
-
+const simulation = new Flocking(canvas);
 simulation.start();
-simulation.stop();
-simulation.frame();
-simulation.setConfig({ debug: debug });
 ```
+
+## Methods
+
+* `constructor(canvas: HTMLCanvasElement)`
+* `start()`
+* `stop()`
+* `frame()` Render a single frame.
+* `setConfig({ debug: true })`
+
+## Preview
+
+![Screenshot](../../static/screen.png)
