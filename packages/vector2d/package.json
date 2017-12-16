@@ -1,9 +1,13 @@
 {
   "name": "@joshduck/vector2d",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "src/index.js",
   "license": "MIT",
   "homepage": "https://github.com/joshduck/flocking/tree/master/packages/vector2d",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshduck/flocking.git"
+  },
   "scripts": {
     "test": "jest"
   },

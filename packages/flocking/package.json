@@ -1,11 +1,15 @@
 {
   "name": "@joshduck/flocking",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "main": "src/simulation",
   "homepage": "https://github.com/joshduck/flocking/tree/master/packages/flocking",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshduck/flocking.git"
+  },
   "dependencies": {
-    "@joshduck/vector2d": "^1.0.0",
+    "@joshduck/vector2d": "^1.0.1",
     "color-convert": "^1.9.1",
     "hsl-to-rgb": "^1.0.0"
   },
