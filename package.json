@@ -1,7 +1,11 @@
 {
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshduck/flocking.git"
+  },
+  "private": true,
   "devDependencies": {
     "lerna": "^2.5.1"
-  },
-  "private": true
+  }
 }
